@@ -25,6 +25,10 @@ def main():
 
 	evaluate_model(model, X_test, y_test)
 
+	# TODO: Make sure to save vectors of y_pred and y_test in case we need to compute 
+	# additional performance measures at a later stage"!!!
+	# 
+
 
 if __name__ == "__main__":
 	main()
