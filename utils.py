@@ -9,8 +9,25 @@ import matplotlib.pyplot as plt
 
 # TODO (Ali): complete this function
 def load_data(path_to_data):
+	#manually entering columns because the files in the dataset didn't have it
+	cols = """id,diagnosis,radius_mean,texture_mean,perimeter_mean,area_mean,smoothness_mean,compactness_mean,concavity_mean,concave_points_mean,symmetry_mean,fractal_dimension_mean,radius_se,texture_se,perimeter_se,area_se,smoothness_se,compactness_se,concavity_se,concave_points_se,symmetry_se,fractal_dimension_se,radius_worst,texture_worst,perimeter_worst,area_worst,smoothness_worst,compactness_worst,concavity_worst,concave_points_worst,symmetry_worst,fractal_dimension_worst"""
+	columns=[]
+	for c in cols.split(','):
+	    if(c.strip()):
+	       columns.append(c.strip())
 
-	return data
+	data = pd.read_csv(path_to_data, names = columns)
+
+	#dropping the ID
+	data.drop("id",axis=1,inplace=True)
+
+	#Converting diagnosis into numeric and setting target
+	target = data['diagnosis'].map({'M':1,'B':0})
+
+	#Dropping the target from the data
+	data.drop("diagnosis",axis=1,inplace=True)
+
+	return data, target
 
 
 def plot_validation_scores(cvresults, path_to_fig):
