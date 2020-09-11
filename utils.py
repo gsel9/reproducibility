@@ -1,13 +1,29 @@
 import numpy as np
 import pandas as pd 
 
-import matplotlib
-
 import seaborn as sns 
+import matplotlib as mpl
+
 import matplotlib.pyplot as plt 
 
 
-# TODO (Ali): complete this function
+plot_config = {
+    # Use LaTeX to write all text
+    "text.usetex": True,
+    # Use 10pt font in plots, to match 10pt font in document
+    "axes.labelsize": 11,
+    "font.size": 10,
+    "lines.linewidth": 1.0,
+    "axes.titlesize": 12,
+    "lines.markersize": 4,
+    # Make the legend/label fonts a little smaller
+    "legend.fontsize": 10,
+    "xtick.labelsize": 10,
+    "ytick.labelsize": 10
+}
+mpl.rcParams.update(plot_config)
+
+
 def load_data(path_to_data):
 	#manually entering columns because the files in the dataset didn't have it
 	cols = """id,diagnosis,radius_mean,texture_mean,perimeter_mean,area_mean,smoothness_mean,compactness_mean,concavity_mean,concave_points_mean,symmetry_mean,fractal_dimension_mean,radius_se,texture_se,perimeter_se,area_se,smoothness_se,compactness_se,concavity_se,concave_points_se,symmetry_se,fractal_dimension_se,radius_worst,texture_worst,perimeter_worst,area_worst,smoothness_worst,compactness_worst,concavity_worst,concave_points_worst,symmetry_worst,fractal_dimension_worst"""
@@ -36,7 +52,7 @@ def plot_validation_scores(cvresults, path_to_fig):
 	train_scores_std = cvresults.loc[:, "std_test_score"].values
 	train_scores_mean = cvresults.loc[:, "mean_test_score"].values
 
-	plt.figure(figsize=(8, 6))
+	plt.figure(figsize=(8, 4))
 	plt.title("Validation Performance")
 
 	plt.grid()
@@ -67,12 +83,12 @@ def plot_confusion_matrix(y_test, y_pred, path_to_fig):
 
 	vrange = (0, np.max(cm))
 	cmap = plt.cm.get_cmap('Blues', vrange[1])
-	norm = matplotlib.colors.BoundaryNorm(np.arange(vrange[0], vrange[1]), cmap.N)
+	norm = mpl.colors.BoundaryNorm(np.arange(vrange[0], vrange[1]), cmap.N)
 
 	reals = ["Benign", "Malignant"]
 	preds = ["Malignant", "Benign"]
 
-	plt.figure(figsize=(6, 6))
+	plt.figure(figsize=(3, 3))
 	ax = sns.heatmap(cm, annot=True, fmt='d', linewidths=0.5, cmap=cmap, 
 					 square=True, cbar=False, norm=norm, linecolor="k")
 	ax.set_ylim(0, 2)

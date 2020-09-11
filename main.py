@@ -32,7 +32,7 @@ def experiment():
 
 def main():
 
-	#experiment()
+	experiment()
 	
 	cv_results = pd.read_csv("cvresults.csv", index_col=0)
 	plot_validation_scores(cv_results, "validation.pdf")
