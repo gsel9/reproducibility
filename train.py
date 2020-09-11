@@ -2,13 +2,15 @@ import numpy as np
 import pandas as pd 
 
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import matthews_corrcoef, make_scorer
 
 
 def select_hyperparameters(model, hparams, X_train, y_train, path_to_cvresults):
 	"""Select model hyperparameters"""
 	
 	# Run cross-validated parameter search.
-	grid_search = GridSearchCV(estimator=model, param_grid=hparams, cv=10, refit=True)
+	grid_search = GridSearchCV(estimator=model, param_grid=hparams, cv=10, refit=True,
+							   scoring=make_scorer(matthews_corrcoef))
 	grid_search.fit(X_train, y_train)
 
 	df = pd.DataFrame(grid_search.cv_results_)

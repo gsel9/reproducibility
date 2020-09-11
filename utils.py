@@ -7,23 +7,6 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt 
 
 
-plot_config = {
-    # Use LaTeX to write all text
-    "text.usetex": True,
-    # Use 10pt font in plots, to match 10pt font in document
-    "axes.labelsize": 11,
-    "font.size": 10,
-    "lines.linewidth": 1.0,
-    "axes.titlesize": 12,
-    "lines.markersize": 4,
-    # Make the legend/label fonts a little smaller
-    "legend.fontsize": 10,
-    "xtick.labelsize": 10,
-    "ytick.labelsize": 10
-}
-mpl.rcParams.update(plot_config)
-
-
 def load_data(path_to_data):
 	#manually entering columns because the files in the dataset didn't have it
 	cols = """id,diagnosis,radius_mean,texture_mean,perimeter_mean,area_mean,smoothness_mean,compactness_mean,concavity_mean,concave_points_mean,symmetry_mean,fractal_dimension_mean,radius_se,texture_se,perimeter_se,area_se,smoothness_se,compactness_se,concavity_se,concave_points_se,symmetry_se,fractal_dimension_se,radius_worst,texture_worst,perimeter_worst,area_worst,smoothness_worst,compactness_worst,concavity_worst,concave_points_worst,symmetry_worst,fractal_dimension_worst"""
@@ -53,7 +36,7 @@ def plot_validation_scores(cvresults, path_to_fig):
 	train_scores_mean = cvresults.loc[:, "mean_test_score"].values
 
 	plt.figure(figsize=(8, 4))
-	plt.title("Validation Performance")
+	plt.title("Validation Performance", weight='bold', fontsize=12)
 
 	plt.grid()
 	plt.fill_between(param_grid, train_scores_mean - train_scores_std,
@@ -62,8 +45,8 @@ def plot_validation_scores(cvresults, path_to_fig):
 
 	plt.xticks(param_grid, param_grid)
 	
-	plt.xlabel(r"$\log_{10} C$")
-	plt.ylabel("Mean MCC")
+	plt.xlabel(r"$\log_{10} C$", weight='bold', fontsize=12)
+	plt.ylabel("MCC", weight='bold', fontsize=12)
 	plt.tight_layout()
 	plt.savefig(path_to_fig)
 
@@ -88,14 +71,14 @@ def plot_confusion_matrix(y_test, y_pred, path_to_fig):
 	reals = ["Benign", "Malignant"]
 	preds = ["Malignant", "Benign"]
 
-	plt.figure(figsize=(3, 3))
+	plt.figure(figsize=(2.5, 2.5))
 	ax = sns.heatmap(cm, annot=True, fmt='d', linewidths=0.5, cmap=cmap, 
 					 square=True, cbar=False, norm=norm, linecolor="k")
 	ax.set_ylim(0, 2)
-	ax.set_ylabel('Ground truth', weight='bold')
-	ax.set_yticklabels(np.array(preds)[::-1], ha='right', va='center', rotation=0)
-	ax.set_title("Predicted", weight='bold')
-	ax.set_xticklabels(reals, ha='center', va='bottom', rotation=0)
+	ax.set_ylabel('Ground truth', weight='bold', fontsize=8)
+	ax.set_yticklabels(np.array(preds)[::-1], ha='right', va='center', rotation=0, fontsize=8)
+	ax.set_title("Predicted", weight='bold', fontsize=8)
+	ax.set_xticklabels(reals, ha='center', va='bottom', rotation=0, fontsize=8)
 	ax.xaxis.set_ticks_position('top')
 
 	plt.tight_layout()
